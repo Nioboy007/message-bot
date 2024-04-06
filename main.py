@@ -36,8 +36,6 @@ def handle_message(client, message):
 # Function to post message in groups and channel
 def post_message(text):
     try:
-        for group_id in group_ids:
-            app.send_message(chat_id=group_id, text=text)
         app.send_message(chat_id=channel_id, text=text)
     except Exception as e:
         print("Error posting message:", e)
