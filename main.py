@@ -26,7 +26,12 @@ def help(client, message):
 def new_post(client, message):
     replied_to_message = message.reply_to_message
     if replied_to_message:
-        post_message(replied_to_message.text)
+        if replied_to_message.text:
+            post_message(replied_to_message.text)
+        elif replied_to_message.document:
+            post_message("File attached: " + replied_to_message.document.file_name)
+        else:
+            post_message("Unsupported message type. Please reply with a text message or a file.")
 
 # Function to post message in groups and channel
 def post_message(text):
