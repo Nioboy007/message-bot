@@ -22,16 +22,11 @@ def help(client, message):
     message.reply_text("This bot allows you to post messages in partner groups. Use /new to start posting.")
 
 # New command handler
-@app.on_message(filters.command("new"))
+@app.on_message(filters.command("new") & filters.reply)
 def new_post(client, message):
-    message.reply_text("Send your message to be posted in your partner groups.")
-
-# Message handler
-@app.on_message(filters.private & filters.reply & filters.text)
-def handle_message(client, message):
     replied_to_message = message.reply_to_message
-    if replied_to_message and replied_to_message.text == "Send your message to be posted in your partner groups.":
-        post_message(message.text)
+    if replied_to_message:
+        post_message(replied_to_message.text)
 
 # Function to post message in groups and channel
 def post_message(text):
