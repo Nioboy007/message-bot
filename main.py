@@ -26,11 +26,7 @@ def help(client, message):
 def new_post(client, message):
     replied_to_message = message.reply_to_message
     if replied_to_message:
-        caption = ""
-        if replied_to_message.text:
-            caption = replied_to_message.text
-        if replied_to_message.caption:
-            caption += "\n" + replied_to_message.caption
+        caption = replied_to_message.text or replied_to_message.caption
         media = replied_to_message.photo or replied_to_message.video or replied_to_message.document or replied_to_message.audio or replied_to_message.animation
         if media:
             for group_id in group_ids:
@@ -42,16 +38,7 @@ def new_post(client, message):
 # Function to send media in groups and channel
 def send_media(chat_id, media, caption):
     try:
-        if media.photo:
-            app.send_photo(chat_id=chat_id, photo=media.file_id, caption=caption)
-        elif media.video:
-            app.send_video(chat_id=chat_id, video=media.file_id, caption=caption)
-        elif media.document:
-            app.send_document(chat_id=chat_id, document=media.file_id, caption=caption)
-        elif media.audio:
-            app.send_audio(chat_id=chat_id, audio=media.file_id, caption=caption)
-        elif media.animation:
-            app.send_animation(chat_id=chat_id, animation=media.file_id, caption=caption)
+        app.send_media(chat_id=chat_id, media=media.file_id, caption=caption)
     except Exception as e:
         print("Error sending media:", e)
 
