@@ -32,10 +32,9 @@ def new_post(client, message):
     message.reply_text("Send your message to be posted in your partner groups.")
 
 # Message handler
-@app.on_message(~filters.command)
+@app.on_message(~filters.command & filters.private)
 def handle_message(client, message):
-    if message.chat.type == "private":
-        post_message(message.text)
+    post_message(message.text)
 
 # Function to post message in groups and channel
 def post_message(text):
