@@ -1,5 +1,4 @@
 from pyrogram import Client, filters
-from pyrogram.types import Message
 
 # Initialize the Pyrogram client
 api_id = 10471716
@@ -32,7 +31,7 @@ def new_post(client, message):
     message.reply_text("Send your message to be posted in your partner groups.")
 
 # Message handler
-@app.on_message(~filters.private & ~filters.command)
+@app.on_message(filters.private & ~filters.command)
 def handle_message(client, message):
     post_message(message.text)
 
