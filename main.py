@@ -26,19 +26,28 @@ def help(client, message):
 def new_post(client, message):
     replied_to_message = message.reply_to_message
     if replied_to_message:
+        caption = ""
         if replied_to_message.text:
-            post_message(replied_to_message.text)
-        elif replied_to_message.document:
-            post_message("File attached: " + replied_to_message.document.file_name)
+            caption = replied_to_message.text
+        if replied_to_message.caption:
+            caption += "\n" + replied_to_message.caption
+        media = replied_to_message.photo or replied_to_message.video or replied_to_message.document or replied_to_message.audio or replied_to_message.animation
+        if media:
+            post_message(caption, media)
         else:
-            post_message("Unsupported message type. Please reply with a text message or a file.")
+            post_message(caption)
 
 # Function to post message in groups and channel
-def post_message(text):
+def post_message(text, media=None):
     try:
-        for group_id in group_ids:
-            app.send_message(chat_id=group_id, text=text)
-        app.send_message(chat_id=channel_id, text=text)
+        if media:
+            for group_id in group_ids:
+                app.send_media(chat_id=group_id, media=media, caption=text)
+            app.send_media(chat_id=channel_id, media=media, caption=text)
+        else:
+            for group_id in group_ids:
+                app.send_message(chat_id=group_id, text=text)
+            app.send_message(chat_id=channel_id, text=text)
     except Exception as e:
         print("Error posting message:", e)
 
