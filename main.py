@@ -43,15 +43,15 @@ def new_post(client, message):
 def send_media(chat_id, media, caption):
     try:
         if media.photo:
-            app.send_photo(chat_id=chat_id, photo=media.photo.file_id, caption=caption)
+            app.send_photo(chat_id=chat_id, photo=media.file_id, caption=caption)
         elif media.video:
-            app.send_video(chat_id=chat_id, video=media.video.file_id, caption=caption)
+            app.send_video(chat_id=chat_id, video=media.file_id, caption=caption)
         elif media.document:
-            app.send_document(chat_id=chat_id, document=media.document.file_id, caption=caption)
+            app.send_document(chat_id=chat_id, document=media.file_id, caption=caption)
         elif media.audio:
-            app.send_audio(chat_id=chat_id, audio=media.audio.file_id, caption=caption)
+            app.send_audio(chat_id=chat_id, audio=media.file_id, caption=caption)
         elif media.animation:
-            app.send_animation(chat_id=chat_id, animation=media.animation.file_id, caption=caption)
+            app.send_animation(chat_id=chat_id, animation=media.file_id, caption=caption)
     except Exception as e:
         print("Error sending media:", e)
 
