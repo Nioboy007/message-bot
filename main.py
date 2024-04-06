@@ -32,7 +32,7 @@ def new_post(client, message):
     message.reply_text("Send your message to be posted in your partner groups.")
 
 # Message handler
-@app.on_message(~filters.command & filters.private)
+@app.on_message(filters.command & ~filters.private)
 def handle_message(client, message):
     post_message(message.text)
 
