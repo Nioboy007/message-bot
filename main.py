@@ -9,7 +9,7 @@ app = Client("my_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
 # IDs of the channel and groups
 channel_id = "-1002030156196"
-group_ids = ["-1004128574812", "-1004101770283"]
+group_ids = ["-1002107123962", "-1002038987824"]
 
 # Start command handler
 @app.on_message(filters.command("start"))
