@@ -30,26 +30,25 @@ def new_post(client, message):
         media = replied_to_message.photo or replied_to_message.video or replied_to_message.document or replied_to_message.audio or replied_to_message.animation
         if media:
             for group_id in group_ids:
-                send_media(group_id, media, caption)
-            send_media(channel_id, media, caption)
+                send_media(group_id, replied_to_message, caption)
+            send_media(channel_id, replied_to_message, caption)
         else:
             post_message(caption)
 
-# Function to send media in groups and channel
 def send_media(chat_id, media, caption):
     try:
         if media.photo:
-            app.send_photo(chat_id=chat_id, photo=media.file_id, caption=caption)
+            app.send_photo(chat_id=chat_id, photo=media.photo.file_id, caption=caption)
         elif media.video:
-            app.send_video(chat_id=chat_id, video=media.file_id, caption=caption)
+            app.send_video(chat_id=chat_id, video=media.video.file_id, caption=caption)
         elif media.document:
-            app.send_document(chat_id=chat_id, document=media.file_id, caption=caption)
+            app.send_document(chat_id=chat_id, document=media.document.file_id, caption=caption)
         elif media.audio:
-            app.send_audio(chat_id=chat_id, audio=media.file_id, caption=caption)
+            app.send_audio(chat_id=chat_id, audio=media.audio.file_id, caption=caption)
         elif media.animation:
-            app.send_animation(chat_id=chat_id, animation=media.file_id, caption=caption)
+            app.send_animation(chat_id=chat_id, animation=media.animation.file_id, caption=caption)
     except Exception as e:
-        print("Error sending media:", e)
+        print(f"Error sending media: {e}")
 
 # Function to post message in groups and channel
 def post_message(text):
