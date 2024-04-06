@@ -11,10 +11,6 @@ app = Client("my_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 channel_id = "-1002030156196"
 group_ids = ["-1004128574812", "-1004101770283"]
 
-# Error handling
-def error_handler(client, exception):
-    print(exception)
-
 # Start command handler
 @app.on_message(filters.command("start"))
 def start(client, message):
@@ -45,9 +41,6 @@ def post_message(text):
         app.send_message(chat_id=channel_id, text=text)
     except Exception as e:
         print("Error posting message:", e)
-
-# Register error handler
-app.on_error += error_handler
 
 # Start the bot
 app.run()
