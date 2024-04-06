@@ -33,21 +33,18 @@ def new_post(client, message):
             caption += "\n" + replied_to_message.caption
         media = replied_to_message.photo or replied_to_message.video or replied_to_message.document or replied_to_message.audio or replied_to_message.animation
         if media:
-            post_message(caption, media)
+            for group_id in group_ids:
+                app.send_media_group(group_id, media=media, caption=text)
+            app.send_media_group(channel_id, media=media, caption=text)
         else:
             post_message(caption)
 
 # Function to post message in groups and channel
-def post_message(text, media=None):
+def post_message(text):
     try:
-        if media:
-            for group_id in group_ids:
-                app.send_media(chat_id=group_id, media=media, caption=text)
-            app.send_media(chat_id=channel_id, media=media, caption=text)
-        else:
-            for group_id in group_ids:
-                app.send_message(chat_id=group_id, text=text)
-            app.send_message(chat_id=channel_id, text=text)
+        for group_id in group_ids:
+            app.send_message(chat_id=group_id, text=text)
+        app.send_message(chat_id=channel_id, text=text)
     except Exception as e:
         print("Error posting message:", e)
 
