@@ -34,8 +34,8 @@ def new_post(client, message):
         media = replied_to_message.photo or replied_to_message.video or replied_to_message.document or replied_to_message.audio or replied_to_message.animation
         if media:
             for group_id in group_ids:
-                app.send_media_group(group_id, media=media, caption=text)
-            app.send_media_group(channel_id, media=media, caption=text)
+                app.send_media_group(group_id, media=media, caption=caption)
+            app.send_media_group(channel_id, media=media, caption=caption)
         else:
             post_message(caption)
 
