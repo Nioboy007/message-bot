@@ -31,9 +31,11 @@ def new_post(client, message):
     message.reply_text("Send your message to be posted in your partner groups.")
 
 # Message handler
-@app.on_message(filters.private & ~filters.command)
+@app.on_message(filters.private & filters.reply & filters.text)
 def handle_message(client, message):
-    post_message(message.text)
+    replied_to_message = message.reply_to_message
+    if replied_to_message and replied_to_message.text == "Send your message to be posted in your partner groups.":
+        post_message(message.text)
 
 # Function to post message in groups and channel
 def post_message(text):
